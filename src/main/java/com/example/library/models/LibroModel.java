@@ -24,13 +24,6 @@ public class LibroModel {
     @Column(name = "isbn")
     private String isbn;
 
-    @OneToMany
-    @JoinTable(
-            name = "libro_autor",
-            joinColumns = @JoinColumn(name = "libro_id"),
-            inverseJoinColumns = @JoinColumn(name = "autor_id")
-    )
-    @Column(name = "autor/es")
-    private List<AutorModel> autores;
+    private Long idAutor;
 
 }

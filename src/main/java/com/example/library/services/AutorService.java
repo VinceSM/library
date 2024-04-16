@@ -46,4 +46,15 @@ public class AutorService {
             return ResponseEntity.notFound().build();
         }
     }
+
+    public AutorModel obtenerAutorPorId(Long idAutor) {
+        Optional<AutorModel> autorOptional = autorRepository.findById(idAutor);
+        if (autorOptional.isPresent()) {
+            return autorOptional.get();
+        } else {
+            throw new IllegalArgumentException("El autor con el ID proporcionado no existe");
+        }
+    }
+
+
 }

@@ -1,14 +1,9 @@
 package com.example.library.controllers;
 
-import com.example.library.dtos.requests.AutorRequest;
 import com.example.library.dtos.requests.LibroRequest;
 import com.example.library.dtos.responses.LibroResponse;
-import com.example.library.mappers.AutorMapper;
-import com.example.library.mappers.LibroMapper;
 import com.example.library.models.AutorModel;
-import com.example.library.models.LibroModel;
-import com.example.library.repositories.AutorRepository;
-import com.example.library.repositories.LibroRepository;
+import com.example.library.services.AutorService;
 import com.example.library.services.LibroService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -25,20 +20,8 @@ public class LibroController {
     @Autowired(required = true)
     private final LibroService libroService;
 
-    @Autowired(required = true)
-    private AutorRepository autorRepository;
-
-    @Autowired(required = true)
-    private AutorModel autorModel;
-
-    @Autowired(required = true)
-    private AutorMapper autorMapper;
-
-    @Autowired(required = true)
-    private LibroMapper libroMapper;
-
-    @Autowired(required = true)
-    private LibroRepository libroRepository;
+    @Autowired
+    private AutorService autorService;
 
     @Autowired(required = true)
     public LibroController(LibroService libroService) {
@@ -46,12 +29,13 @@ public class LibroController {
     }
 
     @PostMapping("/crear")
-    public ResponseEntity<?> crearLibro(@RequestBody LibroRequest libroRequest) {
-        try {
-            LibroResponse nuevoLibro = libroService.crearLibro(libroRequest);
+    public ResponseEntity<LibroResponse> crearLibro(@RequestBody LibroRequest libroRequest) {
+        Optional<AutorModel> autorOptional = Optional.ofNullable(autorService.obtenerAutorPorId(libroRequest.getIdAutor()));
+        if (autorOptional.isPresent()) {
+            LibroResponse nuevoLibro = libroService.crearLibro(libroRequest, autorOptional.get());
             return ResponseEntity.status(HttpStatus.CREATED).body(nuevoLibro);
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al crear el libro: " + e.getMessage());
+        } else {
+            return null;
         }
     }
 

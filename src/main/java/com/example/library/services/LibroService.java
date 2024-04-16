@@ -4,6 +4,7 @@ package com.example.library.services;
 import com.example.library.dtos.requests.LibroRequest;
 import com.example.library.dtos.responses.LibroResponse;
 import com.example.library.mappers.LibroMapper;
+import com.example.library.models.AutorModel;
 import com.example.library.models.LibroModel;
 import com.example.library.repositories.LibroRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,15 +25,14 @@ public class LibroService {
     private LibroMapper libroMapper;
 
     @Transactional
-    /*public LibroResponse crearLibro(LibroRequest libroRequest) {
-        LibroModel libro = libroMapper.mapToLibroModel(libroRequest);
-        libroRepository.save(libro);
-        return libroMapper.mapToLibroResponse(libro);
-    }*/
+    public LibroResponse crearLibro(LibroRequest libroRequest, AutorModel autor) {
+        LibroModel libro = new LibroModel();
+        libro.setIsbn(libroRequest.getIsbn());
+        libro.setTitulo(libroRequest.getTitulo());
+        libro.setIdAutor(libroRequest.getIdAutor());
 
-    public LibroResponse crearLibro(LibroRequest libroRequest) {
-        LibroModel libro = libroMapper.mapToLibroModel(libroRequest);
         LibroModel libroGuardado = libroRepository.save(libro);
+
         return libroMapper.mapToLibroResponse(libroGuardado);
     }
 

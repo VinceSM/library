@@ -25,7 +25,7 @@ public class AutorModel {
     @Column(name = "apellido")
     private String apellido;
 
-    @ManyToOne
+    @ManyToMany
     private List<LibroModel> libros;
 
 }

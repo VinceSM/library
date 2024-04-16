@@ -8,7 +8,7 @@ import java.util.List;
 @Getter
 @Setter
 public class LibroRequest {
-    private String titulo;
     private String isbn;
-    private List<AutorRequest> autores;
+    private String titulo;
+    private Long idAutor;
 }

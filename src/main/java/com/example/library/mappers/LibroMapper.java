@@ -14,7 +14,7 @@ public class LibroMapper {
     public LibroModel mapToLibroModel(LibroRequest libroRequest) {
         LibroModel libro = new LibroModel();
         libro.setTitulo(libroRequest.getTitulo());
-        libro.setAutores(autorMapper.mapToAutorModelList(libroRequest.getAutores()));
+        libro.setIdAutor(libroRequest.getIdAutor());
         libro.setIsbn(libroRequest.getIsbn());
         return libro;
     }
@@ -23,7 +23,7 @@ public class LibroMapper {
         LibroResponse libroResponse = new LibroResponse();
         libroResponse.setId(libro.getId());
         libroResponse.setTitulo(libro.getTitulo());
-        libroResponse.setAutores(autorMapper.mapToAutorResponseList(libro.getAutores()));
+        libroResponse.setIdAutor(libro.getIdAutor());
         libroResponse.setIsbn(libro.getIsbn());
         return libroResponse;
     }

@@ -10,6 +10,6 @@ import java.util.List;
 public class LibroResponse {
     private Long id;
     private String titulo;
-    private List<AutorResponse> autores;
+    private Long idAutor;
     private String isbn;
 }
